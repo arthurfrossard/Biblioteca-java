@@ -10,12 +10,14 @@ public class UI {
         System.out.println("Selecione a opção que deseja:");
         System.out.println("1 - Cadastrar cliente;");
         System.out.println("2 - Listar cliente(s)");
-        System.out.println("3 - Cadastrar livro;");
-        System.out.println("4 - Listar livro(s)");
-        System.out.println("5 - Alugar Livro(s);");
-        System.out.println("6 - Listar aluguel(is);");
-        System.out.println("7 - Devolver livro(s);");
-        System.out.println("8 - Encerrar Programa;");
+        System.out.println("3 - Remover cliente");
+        System.out.println("4 - Cadastrar livro;");
+        System.out.println("5 - Listar livro(s)");
+        System.out.println("6 - Remover livro;");
+        System.out.println("7 - Alugar Livro(s);");
+        System.out.println("8 - Listar aluguel(is);");
+        System.out.println("9 - Devolver livro(s);");
+        System.out.println("10 - Encerrar Programa;");
     }
 
     public static void menuCadastroCliente(Biblioteca biblioteca, Scanner sc) {
@@ -32,6 +34,13 @@ public class UI {
         LocalDate dataDeNascimento = LocalDate.parse(dataNascimentoString);
 
         biblioteca.cadastrarCliente(nome, cpf, dataDeNascimento);
+    }
+
+    public static void menuRemoverCliente(Biblioteca biblioteca, Scanner sc) {
+        System.out.print("Digite o ID do cliente que deseja remover: ");
+        String idClienteParaRemover = sc.nextLine();
+
+        biblioteca.removerClientePorId(idClienteParaRemover);
     }
 
     public static void menuCadastroLivro(Biblioteca biblioteca, Scanner sc) {
@@ -60,6 +69,13 @@ public class UI {
         sc.nextLine(); //
 
         biblioteca.cadastrarLivro(titulo, autor, isbn, genero, anoPublicacao, classificacaoIndicativa, valorDoAluguelPorDia);
+    }
+
+    public static void menuRemoverLivro(Biblioteca biblioteca, Scanner sc) {
+        System.out.print("Digite o ID do livro que deseja remover: ");
+        String idLivroParaRemover = sc.nextLine();
+
+        biblioteca.removerLivroPorId(idLivroParaRemover);
     }
 
 }

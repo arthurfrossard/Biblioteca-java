@@ -36,6 +36,25 @@ public class Biblioteca {
 
     }
 
+    public void removerClientePorId(String clienteId) {
+        Cliente clienteEncontrado = null;
+
+        for (Cliente cliente : this.getClientes()) {
+            if (cliente.getId().equals(clienteId)) {
+                clienteEncontrado = cliente;
+                break;
+            }
+        }
+
+        if (clienteEncontrado != null) {
+            Set<Cliente> novaListaClientes = new HashSet<>(this.getClientes());
+            novaListaClientes.remove(clienteEncontrado);
+            this.setClientes(novaListaClientes);
+        } else {
+            System.out.println("Cliente não encontrado com o ID especificado.");
+        }
+    }
+
     public void cadastrarLivro(String titulo, String autor, String isbn, String genero, int anoDaPublicacao,
                                int classificacaoIndicativa, double valorDoAluguelPorDia) {
 
@@ -61,6 +80,25 @@ public class Biblioteca {
         }
     }
 
+    public void removerLivroPorId(String livroId) {
+        Livro livroEncontrado = null;
+
+        for (Livro livro : this.getLivros()) {
+            if (livro.getId().equals(livroId)) {
+                livroEncontrado = livro;
+                break;
+            }
+        }
+
+        if (livroEncontrado != null) {
+            Set<Livro> novaListaLivros = new HashSet<>(this.getLivros());
+            novaListaLivros.remove(livroEncontrado);
+            this.setLivros(novaListaLivros);
+            System.out.println("Livro removido com sucesso!");
+        } else {
+            System.out.println("Livro não encontrado com o ID especificado.");
+        }
+    }
 
 
 }

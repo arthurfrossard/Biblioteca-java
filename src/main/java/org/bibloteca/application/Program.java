@@ -10,8 +10,6 @@ public class Program {
         Scanner sc = new Scanner(System.in);
         int escolhaMenu;
 
-
-
         do {
             UI.menuDeSelecao();
             System.out.print("Selecione a opção desejada: ");
@@ -20,14 +18,16 @@ public class Program {
             switch (escolhaMenu) {
                 case 1 -> UI.menuCadastroCliente(biblioteca, sc);
                 case 2 -> biblioteca.listarClientes();
-                case 3 -> UI.menuCadastroLivro(biblioteca, sc);
-                case 4 -> biblioteca.listarLivros();
-                //case 5 -> UI.alugarLivro();
-                //case 6 -> UI.listarAlugueis();
-                //case 7 -> UI.devolverLivro();
+                case 3 -> UI.menuRemoverCliente(biblioteca, sc);
+                case 4 -> UI.menuCadastroLivro(biblioteca, sc);
+                case 5 -> biblioteca.listarLivros();
+                case 6 -> UI.menuRemoverLivro(biblioteca, sc);
+                //case 7 -> UI.alugarLivro();
+                //case 8 -> UI.listarAlugueis();
+                //case 9 -> UI.devolverLivro();
             }
         } while (true);
 
-       // sc.close();
+        //sc.close();
     }
 }
