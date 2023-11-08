@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.Year;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -100,5 +101,82 @@ public class Biblioteca {
         }
     }
 
+    public void alugarLivro(String idCliente, String idLivro) {
+        Cliente cliente = null;
+        Livro livro = null;
 
+        for (Cliente c : clientes) {
+            if (c.getId().equals(idCliente)) {
+                cliente = c;
+                break;
+            }
+        }
+
+        for (Livro l : livros) {
+            if (l.getId().equals(idLivro)) {
+                livro = l;
+                break;
+            }
+        }
+
+        if (cliente != null && livro != null) {
+            if (livro.isDisponibilidade()) {
+                Aluguel novoAluguel = Aluguel.builder()
+                        .livro(livro)
+                        .cliente(cliente)
+                        .dataDoAluguel(LocalDate.now())
+                        .build();
+
+                alugueis.add(novoAluguel);
+                livro.setDisponibilidade(false);
+                System.out.println("Livro alugado com sucesso!");
+            } else {
+                System.out.println("Livro não disponível para aluguel.");
+            }
+        } else {
+            System.out.println("Livro ou cliente não encontrado na biblioteca!");
+        }
+    }
+
+    public void listarAlugueis() {
+        for (Aluguel aluguel : alugueis) {
+            Cliente cliente = aluguel.getCliente();
+            Livro livro = aluguel.getLivro();
+
+            String dataAluguelFormatada = aluguel.getDataDoAluguel().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+            String infoAluguel = String.format(
+                    "ID Aluguel: %s - Nome do cliente: %s - Nome do livro: %s - Data do aluguel: %s",
+                    aluguel.getId(),
+                    cliente.getNome(),
+                    livro.getTitulo(),
+                    dataAluguelFormatada
+            );
+
+            System.out.println(infoAluguel);
+        }
+    }
+
+    public void devolverLivro(String idAluguel) {
+        Aluguel aluguelADevolver = null;
+
+        // Procura o aluguel correspondente ao ID
+        for (Aluguel aluguel : alugueis) {
+            if (aluguel.getId().equals(idAluguel)) {
+                aluguelADevolver = aluguel;
+                break;
+            }
+        }
+
+        if (aluguelADevolver != null) {
+            Livro livroDevolvido = aluguelADevolver.getLivro();
+            aluguelADevolver.setStatusDoAluguel(false);
+            livroDevolvido.setDisponibilidade(true);
+
+            double valorTotal = aluguelADevolver.calcularValorTotal();
+            System.out.println("Livro devolvido com sucesso! Valor total do aluguel: " + valorTotal);
+        } else {
+            System.out.println("Aluguel não encontrado.");
+        }
+    }
 }

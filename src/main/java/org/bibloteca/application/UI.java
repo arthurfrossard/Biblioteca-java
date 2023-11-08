@@ -78,4 +78,20 @@ public class UI {
         biblioteca.removerLivroPorId(idLivroParaRemover);
     }
 
+    public static void menuAlugarLivro(Biblioteca biblioteca, Scanner sc) {
+        System.out.println("Insira o ID do cliente: ");
+        String idCliente = sc.nextLine();
+
+        System.out.println("Insira o ID do livro: ");
+        String idLivro = sc.nextLine();
+
+        biblioteca.alugarLivro(idCliente, idLivro);
+    }
+
+    public static void menuDevolverLivro(Biblioteca biblioteca, Scanner sc) {
+        System.out.println("Digite o ID do aluguel a ser devolvido: ");
+        String idAluguel = sc.nextLine();
+
+        biblioteca.devolverLivro(idAluguel);
+    }
 }

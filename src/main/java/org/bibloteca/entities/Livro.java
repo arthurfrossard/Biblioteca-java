@@ -2,6 +2,7 @@ package org.bibloteca.entities;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.Year;
 import java.util.UUID;
@@ -16,5 +17,6 @@ public class Livro {
     private Year anoDaPublicacao;
     private int classificacaoIndicativa;
     private double valorDoAluguelPorDia;
+    @Setter private boolean disponibilidade = true;
 
 }

@@ -22,12 +22,13 @@ public class Program {
                 case 4 -> UI.menuCadastroLivro(biblioteca, sc);
                 case 5 -> biblioteca.listarLivros();
                 case 6 -> UI.menuRemoverLivro(biblioteca, sc);
-                //case 7 -> UI.alugarLivro();
-                //case 8 -> UI.listarAlugueis();
-                //case 9 -> UI.devolverLivro();
+                case 7 -> UI.menuAlugarLivro(biblioteca, sc);
+                case 8 -> biblioteca.listarAlugueis();
+                case 9 -> UI.menuDevolverLivro(biblioteca, sc);
             }
-        } while (true);
+        } while (escolhaMenu == 10);
 
-        //sc.close();
+        sc.close();
+
     }
 }
