@@ -8,11 +8,13 @@ import org.bibloteca.entities.Livro;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.UUID;
 
 @Builder @Getter
 public class Aluguel {
-    private ArrayList<Livro> livros;
+    private final String id = UUID.randomUUID().toString();
+    private Set<Livro> livros;
     private Cliente cliente;
     private LocalDate dataDoAluguel;
     private LocalDate dataPrevisaoRetorno;
