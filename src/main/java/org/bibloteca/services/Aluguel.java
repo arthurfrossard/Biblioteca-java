@@ -9,7 +9,6 @@ import org.bibloteca.entities.Livro;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Set;
 import java.util.UUID;
 
 @Builder @Getter
