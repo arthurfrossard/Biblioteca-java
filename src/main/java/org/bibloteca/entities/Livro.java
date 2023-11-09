@@ -16,6 +16,6 @@ public class Livro {
     private String genero;
     private Year anoDaPublicacao;
     private int classificacaoIndicativa;
-    private double valorDoAluguelPorDia;
+    @Setter private double valorDoAluguelPorDia;
     @Setter private boolean disponibilidade = true;
 }

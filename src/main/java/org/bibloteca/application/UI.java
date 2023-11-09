@@ -16,11 +16,12 @@ public class UI {
         System.out.println("3 - Remover cliente");
         System.out.println("4 - Cadastrar livro;");
         System.out.println("5 - Listar livro(s)");
-        System.out.println("6 - Remover livro;");
-        System.out.println("7 - Alugar Livro(s);");
-        System.out.println("8 - Listar aluguel(is);");
-        System.out.println("9 - Devolver livro(s);");
-        System.out.println("10 - Encerrar Programa;");
+        System.out.println("6 - Alterar valor do livro;");
+        System.out.println("7 - Remover livro;");
+        System.out.println("8 - Alugar Livro(s);");
+        System.out.println("9 - Listar aluguel(is);");
+        System.out.println("10 - Devolver livro(s);");
+        System.out.println("11 - Encerrar Programa;");
     }
 
     public static void menuCadastroCliente(Biblioteca biblioteca, Scanner sc) {
@@ -83,6 +84,22 @@ public class UI {
         }
     }
 
+    public static void menuAlterarValorDoLivro(Biblioteca biblioteca, Scanner sc) {
+        try {
+            System.out.print("Digite o ID do livro que deseja alterar: ");
+            String livroId = sc.nextLine();
+
+            System.out.print("Digite o novo valor do aluguel por dia: ");
+            double novoValor = sc.nextDouble();
+            sc.nextLine();
+
+            biblioteca.alterarValorDoLivro(livroId, novoValor);
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Certifique-se de inserir valores corretos.");
+        }
+    }
+
+
     public static void menuRemoverLivro(Biblioteca biblioteca, Scanner sc) {
         System.out.print("Digite o ID do livro que deseja remover: ");
         String idLivroParaRemover = sc.nextLine();
@@ -106,4 +123,5 @@ public class UI {
 
         biblioteca.devolverLivro(idAluguel);
     }
+
 }

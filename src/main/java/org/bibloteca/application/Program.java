@@ -28,12 +28,13 @@ public class Program {
                 case 3 -> UI.menuRemoverCliente(biblioteca, sc);
                 case 4 -> UI.menuCadastroLivro(biblioteca, sc);
                 case 5 -> biblioteca.listarLivros();
-                case 6 -> UI.menuRemoverLivro(biblioteca, sc);
-                case 7 -> UI.menuAlugarLivro(biblioteca, sc);
-                case 8 -> biblioteca.listarAlugueis();
-                case 9 -> UI.menuDevolverLivro(biblioteca, sc);
+                case 6 -> UI.menuAlterarValorDoLivro(biblioteca, sc);
+                case 7 -> UI.menuRemoverLivro(biblioteca, sc);
+                case 8 -> UI.menuAlugarLivro(biblioteca, sc);
+                case 9 -> biblioteca.listarAlugueis();
+                case 10 -> UI.menuDevolverLivro(biblioteca, sc);
             }
-        } while (escolhaMenu != 10);
+        } while (escolhaMenu != 11);
 
         sc.close();
 

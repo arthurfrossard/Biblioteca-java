@@ -108,6 +108,25 @@ public class Biblioteca {
         }
     }
 
+    public void alterarValorDoLivro(String livroId, double novoValor) {
+        Livro livroEncontrado = null;
+
+        for (Livro livro : this.getLivros()) {
+            if (livro.getId().equals(livroId)) {
+                livroEncontrado = livro;
+                break;
+            }
+        }
+
+        if (livroEncontrado != null) {
+            livroEncontrado.setValorDoAluguelPorDia(novoValor);
+            System.out.println("Valor do livro alterado com sucesso!");
+        } else {
+            System.out.println("Livro não encontrado com o ID especificado.");
+        }
+    }
+
+
     public void alugarLivro(String idCliente, String idLivro) {
         Cliente cliente = null;
         Livro livro = null;
