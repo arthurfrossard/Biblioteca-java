@@ -30,11 +30,14 @@ public class Biblioteca {
     }
 
     public void listarClientes() {
+        System.out.println("Lista de clientes:");
+        System.out.println("ID - Nome - Data de Nascimento");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         for (Cliente cliente : this.getClientes()) {
-            String info = cliente.getId() + " - " + cliente.getNome();
+            String dataNascimentoFormatada = cliente.getDataDeNascimento().format(formatter);
+            String info = cliente.getId() + " - " + cliente.getNome() + " - " + dataNascimentoFormatada;
             System.out.println(info);
         }
-
     }
 
     public void removerClientePorId(String clienteId) {
@@ -75,8 +78,12 @@ public class Biblioteca {
     }
 
     public void listarLivros() {
+        System.out.println("ID - Título - Disponibilidade - Valor do Aluguel por Dia - Autor - Gênero - Ano de Publicação - Classificação Indicativa");
         for (Livro livro : this.getLivros()) {
-            String info = livro.getId() + " - " + livro.getTitulo();
+            String info = livro.getId() + " - " + livro.getTitulo() + " - "
+                    + livro.isDisponibilidade() + " - " + livro.getValorDoAluguelPorDia()
+                    + " - " + livro.getAutor() + " - " + livro.getGenero() + " - "
+                    + livro.getAnoDaPublicacao() + " - " + livro.getClassificacaoIndicativa();
             System.out.println(info);
         }
     }
@@ -121,15 +128,19 @@ public class Biblioteca {
 
         if (cliente != null && livro != null) {
             if (livro.isDisponibilidade()) {
-                Aluguel novoAluguel = Aluguel.builder()
-                        .livro(livro)
-                        .cliente(cliente)
-                        .dataDoAluguel(LocalDate.now())
-                        .build();
+                if (cliente.getIdade() >= livro.getClassificacaoIndicativa()) {
+                    Aluguel novoAluguel = Aluguel.builder()
+                            .livro(livro)
+                            .cliente(cliente)
+                            .dataDoAluguel(LocalDate.now())
+                            .build();
 
-                alugueis.add(novoAluguel);
-                livro.setDisponibilidade(false);
-                System.out.println("Livro alugado com sucesso!");
+                    alugueis.add(novoAluguel);
+                    livro.setDisponibilidade(false);
+                    System.out.println("Livro alugado com sucesso!");
+                } else {
+                    System.out.println("O cliente não tem idade suficiente para alugar este livro.");
+                }
             } else {
                 System.out.println("Livro não disponível para aluguel.");
             }
@@ -137,7 +148,6 @@ public class Biblioteca {
             System.out.println("Livro ou cliente não encontrado na biblioteca!");
         }
     }
-
     public void listarAlugueis() {
         for (Aluguel aluguel : alugueis) {
             Cliente cliente = aluguel.getCliente();

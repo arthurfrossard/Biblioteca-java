@@ -2,19 +2,26 @@ package org.bibloteca.application;
 
 import org.bibloteca.services.Biblioteca;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Program {
     public static void main(String[] args) {
         Biblioteca biblioteca = Biblioteca.builder().build();
         Scanner sc = new Scanner(System.in);
-        int escolhaMenu;
+        int escolhaMenu = 0;
 
         do {
             UI.menuDeSelecao();
-            System.out.print("Selecione a opção desejada: ");
-            escolhaMenu = sc.nextInt();
-            sc.nextLine();
+            try {
+                System.out.print("Selecione a opção desejada: ");
+                escolhaMenu = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Por favor, insira um número válido.");
+                sc.nextLine();
+            }
+
             switch (escolhaMenu) {
                 case 1 -> UI.menuCadastroCliente(biblioteca, sc);
                 case 2 -> biblioteca.listarClientes();
@@ -26,7 +33,7 @@ public class Program {
                 case 8 -> biblioteca.listarAlugueis();
                 case 9 -> UI.menuDevolverLivro(biblioteca, sc);
             }
-        } while (escolhaMenu == 10);
+        } while (escolhaMenu != 10);
 
         sc.close();
 

@@ -18,5 +18,4 @@ public class Livro {
     private int classificacaoIndicativa;
     private double valorDoAluguelPorDia;
     @Setter private boolean disponibilidade = true;
-
 }
