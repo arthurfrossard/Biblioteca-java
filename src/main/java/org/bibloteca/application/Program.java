@@ -33,6 +33,7 @@ public class Program {
                 case 8 -> UI.menuAlugarLivro(biblioteca, sc);
                 case 9 -> biblioteca.listarAlugueis();
                 case 10 -> UI.menuDevolverLivro(biblioteca, sc);
+                case 11 -> System.out.println("Programa encerrado!");
             }
         } while (escolhaMenu != 11);
 

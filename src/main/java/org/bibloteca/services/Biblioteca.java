@@ -30,15 +30,20 @@ public class Biblioteca {
     }
 
     public void listarClientes() {
-        System.out.println("Lista de clientes:");
-        System.out.println("ID - Nome - Data de Nascimento");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        for (Cliente cliente : this.getClientes()) {
-            String dataNascimentoFormatada = cliente.getDataDeNascimento().format(formatter);
-            String info = cliente.getId() + " - " + cliente.getNome() + " - " + dataNascimentoFormatada;
-            System.out.println(info);
+        if (this.getClientes().isEmpty()) {
+            System.out.println("Não há clientes cadastrados na biblioteca.");
+        } else {
+            System.out.println("Lista de clientes:");
+            System.out.println("ID - Nome - Data de Nascimento");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            for (Cliente cliente : this.getClientes()) {
+                String dataNascimentoFormatada = cliente.getDataDeNascimento().format(formatter);
+                String info = cliente.getId() + " - " + cliente.getNome() + " - " + dataNascimentoFormatada;
+                System.out.println(info);
+            }
         }
     }
+
 
     public void removerClientePorId(String clienteId) {
         Cliente clienteEncontrado = null;
@@ -79,13 +84,17 @@ public class Biblioteca {
     }
 
     public void listarLivros() {
-        System.out.println("ID - Título - Disponibilidade - Valor do Aluguel por Dia - Autor - Gênero - Ano de Publicação - Classificação Indicativa");
-        for (Livro livro : this.getLivros()) {
-            String info = livro.getId() + " - " + livro.getTitulo() + " - "
-                    + livro.isDisponibilidade() + " - " + livro.getValorDoAluguelPorDia()
-                    + " - " + livro.getAutor() + " - " + livro.getGenero() + " - "
-                    + livro.getAnoDaPublicacao() + " - " + livro.getClassificacaoIndicativa();
-            System.out.println(info);
+        if (this.getLivros().isEmpty()) {
+            System.out.println("Não há livros cadastrados na biblioteca.");
+        } else {
+            System.out.println("ID - Título - Disponibilidade - Valor do Aluguel por Dia - Autor - Gênero - Ano de Publicação - Classificação Indicativa");
+            for (Livro livro : this.getLivros()) {
+                String info = livro.getId() + " - " + livro.getTitulo() + " - "
+                        + livro.isDisponibilidade() + " - " + livro.getValorDoAluguelPorDia()
+                        + " - " + livro.getAutor() + " - " + livro.getGenero() + " - "
+                        + livro.getAnoDaPublicacao() + " - " + livro.getClassificacaoIndicativa();
+                System.out.println(info);
+            }
         }
     }
 
@@ -126,7 +135,6 @@ public class Biblioteca {
             System.out.println("Livro não encontrado com o ID especificado.");
         }
     }
-
 
     public void alugarLivro(String idCliente, String idLivro) {
         Cliente cliente = null;
@@ -172,22 +180,27 @@ public class Biblioteca {
             System.out.println("Livro ou cliente não encontrado na biblioteca!");
         }
     }
+
     public void listarAlugueis() {
-        for (Aluguel aluguel : alugueis) {
-            Cliente cliente = aluguel.getCliente();
-            Livro livro = aluguel.getLivro();
+        if (this.getAlugueis().isEmpty()) {
+            System.out.println("Não há aluguéis registrados na biblioteca.");
+        } else {
+            for (Aluguel aluguel : this.getAlugueis()) {
+                Cliente cliente = aluguel.getCliente();
+                Livro livro = aluguel.getLivro();
 
-            String dataAluguelFormatada = aluguel.getDataDoAluguel().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                String dataAluguelFormatada = aluguel.getDataDoAluguel().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-            String infoAluguel = String.format(
-                    "ID Aluguel: %s - Nome do cliente: %s - Nome do livro: %s - Data do aluguel: %s",
-                    aluguel.getId(),
-                    cliente.getNome(),
-                    livro.getTitulo(),
-                    dataAluguelFormatada
-            );
+                String infoAluguel = String.format(
+                        "ID Aluguel: %s - Nome do cliente: %s - Nome do livro: %s - Data do aluguel: %s",
+                        aluguel.getId(),
+                        cliente.getNome(),
+                        livro.getTitulo(),
+                        dataAluguelFormatada
+                );
 
-            System.out.println(infoAluguel);
+                System.out.println(infoAluguel);
+            }
         }
     }
 
