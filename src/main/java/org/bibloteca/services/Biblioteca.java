@@ -70,6 +70,7 @@ public class Biblioteca {
                 .anoDaPublicacao(Year.of(anoDaPublicacao))
                 .classificacaoIndicativa(classificacaoIndicativa)
                 .valorDoAluguelPorDia(valorDoAluguelPorDia)
+                .disponibilidade(true)
                 .build();
 
         Set<Livro> novaListaLivros = new HashSet<>(this.getLivros());
@@ -152,9 +153,13 @@ public class Biblioteca {
                             .livro(livro)
                             .cliente(cliente)
                             .dataDoAluguel(LocalDate.now())
+                            .statusDoAluguel(true)
                             .build();
 
-                    alugueis.add(novoAluguel);
+                    Set<Aluguel> novaListaAligueis = new HashSet<>(this.getAlugueis());
+                    novaListaAligueis.add(novoAluguel);
+                    this.setAlugueis(novaListaAligueis);
+
                     livro.setDisponibilidade(false);
                     System.out.println("Livro alugado com sucesso!");
                 } else {

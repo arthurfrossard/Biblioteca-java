@@ -12,10 +12,10 @@ public class UI {
     public static void menuDeSelecao() {
         System.out.println("Selecione a opção que deseja:");
         System.out.println("1 - Cadastrar cliente;");
-        System.out.println("2 - Listar cliente(s)");
-        System.out.println("3 - Remover cliente");
+        System.out.println("2 - Listar cliente(s);");
+        System.out.println("3 - Remover cliente;");
         System.out.println("4 - Cadastrar livro;");
-        System.out.println("5 - Listar livro(s)");
+        System.out.println("5 - Listar livro(s);");
         System.out.println("6 - Alterar valor do livro;");
         System.out.println("7 - Remover livro;");
         System.out.println("8 - Alugar Livro(s);");
@@ -68,15 +68,15 @@ public class UI {
 
             System.out.print("Ano da publicação do livro: ");
             int anoPublicacao = sc.nextInt();
-            sc.nextLine(); // Limpar o buffer
+            sc.nextLine();
 
             System.out.print("Classificação indicativa do livro: ");
             int classificacaoIndicativa = sc.nextInt();
-            sc.nextLine(); // Limpar o buffer
+            sc.nextLine();
 
             System.out.print("Valor do aluguel por dia: ");
             double valorDoAluguelPorDia = sc.nextDouble();
-            sc.nextLine(); // Limpar o buffer
+            sc.nextLine();
 
             biblioteca.cadastrarLivro(titulo, autor, isbn, genero, anoPublicacao, classificacaoIndicativa, valorDoAluguelPorDia);
         } catch (InputMismatchException e) {
@@ -99,7 +99,6 @@ public class UI {
         }
     }
 
-
     public static void menuRemoverLivro(Biblioteca biblioteca, Scanner sc) {
         System.out.print("Digite o ID do livro que deseja remover: ");
         String idLivroParaRemover = sc.nextLine();
@@ -108,17 +107,17 @@ public class UI {
     }
 
     public static void menuAlugarLivro(Biblioteca biblioteca, Scanner sc) {
-        System.out.println("Insira o ID do cliente: ");
+        System.out.print("Insira o ID do cliente: ");
         String idCliente = sc.nextLine();
 
-        System.out.println("Insira o ID do livro: ");
+        System.out.print("Insira o ID do livro: ");
         String idLivro = sc.nextLine();
 
         biblioteca.alugarLivro(idCliente, idLivro);
     }
 
     public static void menuDevolverLivro(Biblioteca biblioteca, Scanner sc) {
-        System.out.println("Digite o ID do aluguel a ser devolvido: ");
+        System.out.print("Digite o ID do aluguel a ser devolvido: ");
         String idAluguel = sc.nextLine();
 
         biblioteca.devolverLivro(idAluguel);

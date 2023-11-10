@@ -17,5 +17,5 @@ public class Livro {
     private Year anoDaPublicacao;
     private int classificacaoIndicativa;
     @Setter private double valorDoAluguelPorDia;
-    @Setter private boolean disponibilidade = true;
+    @Setter private boolean disponibilidade;
 }

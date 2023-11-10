@@ -17,7 +17,7 @@ public class Aluguel {
     private final String id = UUID.randomUUID().toString();
     private Livro livro;
     private Cliente cliente;
-    @Setter(AccessLevel.PROTECTED) private boolean statusDoAluguel = true;
+    @Setter(AccessLevel.PROTECTED) private boolean statusDoAluguel;
     private LocalDate dataDoAluguel;
     private LocalDate dataDevolucao;
 
