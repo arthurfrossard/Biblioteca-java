@@ -6,16 +6,15 @@ import java.time.LocalDate;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
-import java.util.Set;
 
 import org.bibloteca.entities.Cliente;
 import org.bibloteca.entities.Livro;
 
-@Builder @Getter @Setter(AccessLevel.PRIVATE)
+@Getter @Setter(AccessLevel.PRIVATE)
 public class Biblioteca {
-    @Singular private Set<Livro> livros;
-    @Singular("addCliente") private Set<Cliente> clientes;
-    @Singular("addAluguel") private Set<Aluguel> alugueis;
+    @Singular private HashSet<Livro> livros;
+    @Singular("addCliente") private HashSet<Cliente> clientes;
+    @Singular("addAluguel") private HashSet<Aluguel> alugueis;
 
     public void cadastrarCliente(String nome, String cpf, LocalDate dataDeNascimento) {
         Cliente novoCliente = Cliente.builder()
@@ -24,9 +23,7 @@ public class Biblioteca {
                 .dataDeNascimento(dataDeNascimento)
                 .build();
 
-        Set<Cliente> novaListaClientes = new HashSet<>(this.getClientes());
-        novaListaClientes.add(novoCliente);
-        this.setClientes(novaListaClientes);
+        this.clientes.add(novoCliente);
     }
 
     public void listarClientes() {
@@ -44,7 +41,6 @@ public class Biblioteca {
         }
     }
 
-
     public void removerClientePorId(String clienteId) {
         Cliente clienteEncontrado = null;
 
@@ -56,9 +52,7 @@ public class Biblioteca {
         }
 
         if (clienteEncontrado != null) {
-            Set<Cliente> novaListaClientes = new HashSet<>(this.getClientes());
-            novaListaClientes.remove(clienteEncontrado);
-            this.setClientes(novaListaClientes);
+            this.clientes.remove(clienteEncontrado);
         } else {
             System.out.println("Cliente não encontrado com o ID especificado.");
         }
@@ -78,9 +72,7 @@ public class Biblioteca {
                 .disponibilidade(true)
                 .build();
 
-        Set<Livro> novaListaLivros = new HashSet<>(this.getLivros());
-        novaListaLivros.add(novoLivro);
-        this.setLivros(novaListaLivros);
+        this.livros.add(novoLivro);
     }
 
     public void listarLivros() {
@@ -109,9 +101,7 @@ public class Biblioteca {
         }
 
         if (livroEncontrado != null) {
-            Set<Livro> novaListaLivros = new HashSet<>(this.getLivros());
-            novaListaLivros.remove(livroEncontrado);
-            this.setLivros(novaListaLivros);
+            this.livros.remove(livroEncontrado);
             System.out.println("Livro removido com sucesso!");
         } else {
             System.out.println("Livro não encontrado com o ID especificado.");
@@ -164,9 +154,7 @@ public class Biblioteca {
                             .statusDoAluguel(true)
                             .build();
 
-                    Set<Aluguel> novaListaAligueis = new HashSet<>(this.getAlugueis());
-                    novaListaAligueis.add(novoAluguel);
-                    this.setAlugueis(novaListaAligueis);
+                    this.alugueis.add(novoAluguel);
 
                     livro.setDisponibilidade(false);
                     System.out.println("Livro alugado com sucesso!");

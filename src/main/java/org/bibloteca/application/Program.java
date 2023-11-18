@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Program {
     public static void main(String[] args) {
-        Biblioteca biblioteca = Biblioteca.builder().build();
+        Biblioteca biblioteca = new Biblioteca();
         Scanner sc = new Scanner(System.in);
         int escolhaMenu = 0;
 
