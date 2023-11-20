@@ -8,6 +8,9 @@ import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import br.com.caelum.stella.validation.CPFValidator;
+import br.com.caelum.stella.validation.InvalidStateException;
+
 public class UI {
     public static void menuDeSelecao() {
         System.out.println("Selecione a opção que deseja:");
@@ -34,6 +37,13 @@ public class UI {
 
             System.out.print("CPF: ");
             String cpf = sc.nextLine();
+
+            CPFValidator cpfValidator = new CPFValidator();
+            try {
+                cpfValidator.assertValid(cpf);
+            } catch (InvalidStateException e) {
+                throw new IllegalArgumentException("CPF inválido.");
+            }
 
             System.out.print("Data de Nascimento (no formato DD/MM/YYYY): ");
             String dataNascimentoString = sc.nextLine();

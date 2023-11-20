@@ -16,6 +16,13 @@ public class Biblioteca {
     @Singular("addCliente") private HashSet<Cliente> clientes;
     @Singular("addAluguel") private HashSet<Aluguel> alugueis;
 
+    @Builder
+    public Biblioteca() {
+        this.livros = new HashSet<>();
+        this.clientes = new HashSet<>();
+        this.alugueis = new HashSet<>();
+    }
+
     public void cadastrarCliente(String nome, String cpf, LocalDate dataDeNascimento) {
         Cliente novoCliente = Cliente.builder()
                 .nome(nome)
