@@ -1,6 +1,6 @@
 package org.bibloteca.ExeptionsBiblioteca;
 
-public class LivroNaoDisponivelException extends Exception {
+public class LivroNaoDisponivelException extends RuntimeException  {
     public LivroNaoDisponivelException(String message) {
         super(message);
     }

@@ -144,8 +144,6 @@ public class Biblioteca {
             }
         } catch (IdadeInsuficienteException | LivroNaoDisponivelException | ElementoNaoEncontradoException e) {
             System.out.println(e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Ocorreu um erro inesperado: " + e.getMessage());
         }
     }
 
