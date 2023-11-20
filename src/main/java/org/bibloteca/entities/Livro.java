@@ -5,11 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Year;
-import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Builder @Getter
 public class Livro {
-    private final String id = UUID.randomUUID().toString();
+    private static final AtomicInteger nextId = new AtomicInteger(1);
+
+    private final int id = nextId.getAndIncrement();
     private String titulo;
     private String autor;
     private String isbn;

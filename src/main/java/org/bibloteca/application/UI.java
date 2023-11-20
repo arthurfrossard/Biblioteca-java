@@ -80,16 +80,24 @@ public class UI {
     }
 
     public static void menuRemoverCliente(Biblioteca biblioteca, Scanner sc) {
-        System.out.print("Digite o ID do cliente que deseja remover: ");
-        String idClienteParaRemover = sc.nextLine();
+        try {
+            System.out.print("Digite o ID do cliente que deseja remover: ");
+            int idClienteParaRemover = sc.nextInt();
+            sc.nextLine();
 
-        long startTime = System.currentTimeMillis();
+            long startTime = System.currentTimeMillis();
 
-        biblioteca.removerClientePorId(idClienteParaRemover);
+            biblioteca.removerClientePorId(idClienteParaRemover);
 
-        long endTime = System.currentTimeMillis();
-        long executionTime = endTime - startTime;
-        logger.info("O método removerClientePorId() levou {} milissegundos para executar.", executionTime);
+            long endTime = System.currentTimeMillis();
+            long executionTime = endTime - startTime;
+            logger.info("O método removerClientePorId() levou {} milissegundos para executar.", executionTime);
+        } catch (InputMismatchException e) {
+            logger.error("Erro: Entrada inválida. Certifique-se de inserir um número inteiro.");
+            sc.nextLine();
+        } catch (Exception e) {
+            logger.error("Erro inesperado ao remover cliente: " + e.getMessage());
+        }
     }
 
     public static void menuCadastroLivro(Biblioteca biblioteca, Scanner sc) {
@@ -146,7 +154,8 @@ public class UI {
     public static void menuAlterarValorDoLivro(Biblioteca biblioteca, Scanner sc) {
         try {
             System.out.print("Digite o ID do livro que deseja alterar: ");
-            String livroId = sc.nextLine();
+            int livroId = sc.nextInt();
+            sc.nextLine();
 
             System.out.print("Digite o novo valor do aluguel por dia: ");
             double novoValor = sc.nextDouble();
@@ -161,52 +170,85 @@ public class UI {
             logger.info("O método alterarValorDoLivro() levou {} milissegundos para executar.", executionTime);
 
         } catch (InputMismatchException e) {
-            logger.error("O usuário inseriu o código de um livro ou cliente de forma incorreta.", e);
-            System.out.println("Entrada inválida. Certifique-se de inserir valores corretos.");
+            logger.error("Entrada inválida. Certifique-se de inserir valores numéricos corretos.", e);
+            sc.nextLine();
+        } catch (Exception e) {
+            logger.error("Erro inesperado ao alterar o valor do livro: " + e.getMessage(), e);
         }
     }
 
+
     public static void menuRemoverLivro(Biblioteca biblioteca, Scanner sc) {
-        System.out.print("Digite o ID do livro que deseja remover: ");
-        String idLivroParaRemover = sc.nextLine();
+        try {
+            System.out.print("Digite o ID do livro que deseja remover: ");
+            int idLivroParaRemover = sc.nextInt();
+            sc.nextLine();
 
-        long startTime = System.currentTimeMillis();
+            long startTime = System.currentTimeMillis();
 
-        biblioteca.removerLivroPorId(idLivroParaRemover);
+            biblioteca.removerLivroPorId(idLivroParaRemover);
 
-        long endTime = System.currentTimeMillis();
-        long executionTime = endTime - startTime;
-        logger.info("O método removerLivroPorId() levou {} milissegundos para executar.", executionTime);
+            long endTime = System.currentTimeMillis();
+            long executionTime = endTime - startTime;
+            logger.info("O método removerLivroPorId() levou {} milissegundos para executar.", executionTime);
 
+        } catch (InputMismatchException e) {
+            logger.error("Entrada inválida. Certifique-se de inserir um número inteiro.", e);
+            sc.nextLine();
+        } catch (Exception e) {
+            logger.error("Erro inesperado ao remover livro: " + e.getMessage(), e);
+        }
     }
+
 
     public static void menuAlugarLivro(Biblioteca biblioteca, Scanner sc) {
-        System.out.print("Insira o ID do cliente: ");
-        String idCliente = sc.nextLine();
+        try {
+            System.out.print("Insira o ID do cliente: ");
+            int idCliente = sc.nextInt();
+            sc.nextLine();
 
-        System.out.print("Insira o ID do livro: ");
-        String idLivro = sc.nextLine();
+            System.out.print("Insira o ID do livro: ");
+            int idLivro = sc.nextInt();
+            sc.nextLine();
 
-        long startTime = System.currentTimeMillis();
+            long startTime = System.currentTimeMillis();
 
-        biblioteca.alugarLivro(idCliente, idLivro);
+            biblioteca.alugarLivro(idCliente, idLivro);
 
-        long endTime = System.currentTimeMillis();
-        long executionTime = endTime - startTime;
-        logger.info("O método alugarLivro() levou {} milissegundos para executar.", executionTime);
+            long endTime = System.currentTimeMillis();
+            long executionTime = endTime - startTime;
+            logger.info("O método alugarLivro() levou {} milissegundos para executar.", executionTime);
+
+        } catch (InputMismatchException e) {
+            logger.error("Entrada inválida. Certifique-se de inserir números inteiros para os IDs.", e);
+            sc.nextLine(); // Limpa o buffer do scanner em caso de erro
+        } catch (Exception e) {
+            logger.error("Erro inesperado ao alugar livro: " + e.getMessage(), e);
+        }
     }
+
 
     public static void menuDevolverLivro(Biblioteca biblioteca, Scanner sc) {
-        System.out.print("Digite o ID do aluguel a ser devolvido: ");
-        String idAluguel = sc.nextLine();
+        try {
+            System.out.print("Digite o ID do aluguel a ser devolvido: ");
+            int idAluguel = sc.nextInt();
+            sc.nextLine();
 
-        long startTime = System.currentTimeMillis();
+            long startTime = System.currentTimeMillis();
 
-        biblioteca.devolverLivro(idAluguel);
+            biblioteca.devolverLivro(idAluguel);
 
-        long endTime = System.currentTimeMillis();
-        long executionTime = endTime - startTime;
-        logger.info("O método devolverLivro() levou {} milissegundos para executar.", executionTime);
+            long endTime = System.currentTimeMillis();
+            long executionTime = endTime - startTime;
+            logger.info("O método devolverLivro() levou {} milissegundos para executar.", executionTime);
+
+        } catch (InputMismatchException e) {
+            logger.error("Entrada inválida. Certifique-se de inserir um número inteiro para o ID do aluguel.", e);
+            sc.nextLine();
+        } catch (Exception e) {
+            logger.error("Erro inesperado ao devolver livro: " + e.getMessage(), e);
+        }
     }
+
 
 }

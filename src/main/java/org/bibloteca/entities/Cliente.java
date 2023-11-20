@@ -6,11 +6,13 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Builder @Getter
 public class Cliente {
-    private final String id = UUID.randomUUID().toString();
+    private static final AtomicInteger nextId = new AtomicInteger(1);
+
+    private final int id = nextId.getAndIncrement();
     @Setter private String nome;
     private String cpf;
     private LocalDate dataDeNascimento;

@@ -50,7 +50,7 @@ public class Biblioteca {
         }
     }
 
-    public void removerClientePorId(String clienteId) {
+    public void removerClientePorId(int clienteId) {
         Cliente clienteEncontrado = buscarClientePorId(clienteId);
 
         if (clienteEncontrado != null) {
@@ -92,7 +92,7 @@ public class Biblioteca {
         }
     }
 
-    public void removerLivroPorId(String livroId) {
+    public void removerLivroPorId(int livroId) {
         Livro livroEncontrado = buscarLivroPorId(livroId);
 
         if (livroEncontrado != null) {
@@ -103,7 +103,7 @@ public class Biblioteca {
         }
     }
 
-    public void alterarValorDoLivro(String livroId, double novoValor) {
+    public void alterarValorDoLivro(int livroId, double novoValor) {
         Livro livroEncontrado = buscarLivroPorId(livroId);
 
         if (livroEncontrado != null) {
@@ -114,7 +114,7 @@ public class Biblioteca {
         }
     }
 
-    public void alugarLivro(String idCliente, String idLivro) {
+    public void alugarLivro(int idCliente, int idLivro) {
         try {
             Cliente cliente = buscarClientePorId(idCliente);
             Livro livro = buscarLivroPorId(idLivro);
@@ -149,18 +149,18 @@ public class Biblioteca {
         }
     }
 
-    private Cliente buscarClientePorId(String idCliente) {
+    private Cliente buscarClientePorId(int idCliente) {
         for (Cliente c : clientes) {
-            if (c.getId().equals(idCliente)) {
+            if (c.getId() == idCliente) {
                 return c;
             }
         }
         return null;
     }
 
-    private Livro buscarLivroPorId(String idLivro) {
+    private Livro buscarLivroPorId(int idLivro) {
         for (Livro l : livros) {
-            if (l.getId().equals(idLivro)) {
+            if (l.getId() == idLivro) {
                 return l;
             }
         }
@@ -190,12 +190,12 @@ public class Biblioteca {
         }
     }
 
-    public void devolverLivro(String idAluguel) {
+    public void devolverLivro(int idAluguel) {
         Aluguel aluguelADevolver = null;
 
         // Procura o aluguel correspondente ao ID
         for (Aluguel aluguel : alugueis) {
-            if (aluguel.getId().equals(idAluguel)) {
+            if (aluguel.getId() == idAluguel) {
                 aluguelADevolver = aluguel;
                 break;
             }

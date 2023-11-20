@@ -10,11 +10,13 @@ import org.bibloteca.entities.Livro;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Builder @Getter
 public class Aluguel {
-    private final String id = UUID.randomUUID().toString();
+    private static final AtomicInteger nextId = new AtomicInteger(1);
+
+    private final int id = nextId.getAndIncrement();
     private Livro livro;
     private Cliente cliente;
     @Setter(AccessLevel.PROTECTED) private boolean statusDoAluguel;
