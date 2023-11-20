@@ -1,23 +1,29 @@
 package org.bibloteca.application;
 
 import org.bibloteca.services.Biblioteca;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Program {
+    private static final Logger logger = LoggerFactory.getLogger(Program.class);
     public static void main(String[] args) {
+        logger.info("Programa iniciado!");
         Biblioteca biblioteca = new Biblioteca();
         Scanner sc = new Scanner(System.in);
         int escolhaMenu = 0;
 
         do {
+            logger.debug("O loop do console reiniciou.");
             UI.menuDeSelecao();
             try {
                 System.out.print("Selecione a opção desejada: ");
                 escolhaMenu = sc.nextInt();
                 sc.nextLine();
             } catch (InputMismatchException e) {
+                logger.error("O usuário inseriu um número de escolha inválido.", e);
                 System.out.println("Por favor, insira um número válido.");
                 sc.nextLine();
             }
@@ -37,6 +43,7 @@ public class Program {
             }
         } while (escolhaMenu != 11);
 
+        logger.info("Programa encerrado!");
         sc.close();
 
     }

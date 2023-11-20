@@ -11,7 +11,12 @@ import java.util.Scanner;
 import br.com.caelum.stella.validation.CPFValidator;
 import br.com.caelum.stella.validation.InvalidStateException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class UI {
+    private static final Logger logger = LoggerFactory.getLogger(UI.class);
+
     public static void menuDeSelecao() {
         System.out.println("Selecione a opção que deseja:");
         System.out.println("1 - Cadastrar cliente;");
@@ -42,6 +47,7 @@ public class UI {
             try {
                 cpfValidator.assertValid(cpf);
             } catch (InvalidStateException e) {
+                logger.error("O usuário inseriu CPF inserido invalido.", e);
                 throw new IllegalArgumentException("CPF inválido.");
             }
 
@@ -55,11 +61,20 @@ public class UI {
                 throw new IllegalArgumentException("Data de nascimento não pode ser uma data futura.");
             }
 
+            long startTime = System.currentTimeMillis();
+
             biblioteca.cadastrarCliente(nome, cpf, dataDeNascimento);
+
+            long endTime = System.currentTimeMillis();
+            long executionTime = endTime - startTime;
+            logger.info("O método cadastrarCliente() levou {} milissegundos para executar.", executionTime);
+
             System.out.println("Cliente cadastrado com sucesso!");
         } catch (DateTimeParseException e) {
+            logger.error("O usuário inseriu o formato da data invalida.", e);
             System.out.println("Formato de data inválido. Use o formato DD/MM/YYYY.");
         } catch (IllegalArgumentException e) {
+            logger.error("O usuário inseriu uma data futura.", e);
             System.out.println(e.getMessage());
         }
     }
@@ -68,7 +83,13 @@ public class UI {
         System.out.print("Digite o ID do cliente que deseja remover: ");
         String idClienteParaRemover = sc.nextLine();
 
+        long startTime = System.currentTimeMillis();
+
         biblioteca.removerClientePorId(idClienteParaRemover);
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        logger.info("O método removerClientePorId() levou {} milissegundos para executar.", executionTime);
     }
 
     public static void menuCadastroLivro(Biblioteca biblioteca, Scanner sc) {
@@ -105,10 +126,19 @@ public class UI {
             double valorDoAluguelPorDia = sc.nextDouble();
             sc.nextLine();
 
+            long startTime = System.currentTimeMillis();
+
             biblioteca.cadastrarLivro(titulo, autor, isbn, genero, anoPublicacao, classificacaoIndicativa, valorDoAluguelPorDia);
+
+            long endTime = System.currentTimeMillis();
+            long executionTime = endTime - startTime;
+            logger.info("O método cadastrarLivro() levou {} milissegundos para executar.", executionTime);
+
         } catch (InputMismatchException e) {
+            logger.error("Entrada inválida de números no cadastro de livro.", e);
             System.out.println("Entrada inválida. Certifique-se de inserir valores numéricos corretos.");
         } catch (IllegalArgumentException e) {
+            logger.error("Ano de publicação inserido pelo usuário foi inválido.", e);
             System.out.println(e.getMessage());
         }
     }
@@ -122,8 +152,16 @@ public class UI {
             double novoValor = sc.nextDouble();
             sc.nextLine();
 
+            long startTime = System.currentTimeMillis();
+
             biblioteca.alterarValorDoLivro(livroId, novoValor);
+
+            long endTime = System.currentTimeMillis();
+            long executionTime = endTime - startTime;
+            logger.info("O método alterarValorDoLivro() levou {} milissegundos para executar.", executionTime);
+
         } catch (InputMismatchException e) {
+            logger.error("O usuário inseriu o código de um livro ou cliente de forma incorreta.", e);
             System.out.println("Entrada inválida. Certifique-se de inserir valores corretos.");
         }
     }
@@ -132,7 +170,14 @@ public class UI {
         System.out.print("Digite o ID do livro que deseja remover: ");
         String idLivroParaRemover = sc.nextLine();
 
+        long startTime = System.currentTimeMillis();
+
         biblioteca.removerLivroPorId(idLivroParaRemover);
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        logger.info("O método removerLivroPorId() levou {} milissegundos para executar.", executionTime);
+
     }
 
     public static void menuAlugarLivro(Biblioteca biblioteca, Scanner sc) {
@@ -142,14 +187,26 @@ public class UI {
         System.out.print("Insira o ID do livro: ");
         String idLivro = sc.nextLine();
 
+        long startTime = System.currentTimeMillis();
+
         biblioteca.alugarLivro(idCliente, idLivro);
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        logger.info("O método alugarLivro() levou {} milissegundos para executar.", executionTime);
     }
 
     public static void menuDevolverLivro(Biblioteca biblioteca, Scanner sc) {
         System.out.print("Digite o ID do aluguel a ser devolvido: ");
         String idAluguel = sc.nextLine();
 
+        long startTime = System.currentTimeMillis();
+
         biblioteca.devolverLivro(idAluguel);
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        logger.info("O método devolverLivro() levou {} milissegundos para executar.", executionTime);
     }
 
 }
