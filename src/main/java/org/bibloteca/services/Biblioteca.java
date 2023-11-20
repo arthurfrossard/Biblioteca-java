@@ -1,5 +1,7 @@
 package org.bibloteca.services;
 
+import org.bibloteca.ExeptionsBiblioteca.*;
+
 import lombok.*;
 
 import java.time.LocalDate;
@@ -49,14 +51,7 @@ public class Biblioteca {
     }
 
     public void removerClientePorId(String clienteId) {
-        Cliente clienteEncontrado = null;
-
-        for (Cliente cliente : this.getClientes()) {
-            if (cliente.getId().equals(clienteId)) {
-                clienteEncontrado = cliente;
-                break;
-            }
-        }
+        Cliente clienteEncontrado = buscarClientePorId(clienteId);
 
         if (clienteEncontrado != null) {
             this.clientes.remove(clienteEncontrado);
@@ -98,14 +93,7 @@ public class Biblioteca {
     }
 
     public void removerLivroPorId(String livroId) {
-        Livro livroEncontrado = null;
-
-        for (Livro livro : this.getLivros()) {
-            if (livro.getId().equals(livroId)) {
-                livroEncontrado = livro;
-                break;
-            }
-        }
+        Livro livroEncontrado = buscarLivroPorId(livroId);
 
         if (livroEncontrado != null) {
             this.livros.remove(livroEncontrado);
@@ -116,14 +104,7 @@ public class Biblioteca {
     }
 
     public void alterarValorDoLivro(String livroId, double novoValor) {
-        Livro livroEncontrado = null;
-
-        for (Livro livro : this.getLivros()) {
-            if (livro.getId().equals(livroId)) {
-                livroEncontrado = livro;
-                break;
-            }
-        }
+        Livro livroEncontrado = buscarLivroPorId(livroId);
 
         if (livroEncontrado != null) {
             livroEncontrado.setValorDoAluguelPorDia(novoValor);
@@ -134,46 +115,56 @@ public class Biblioteca {
     }
 
     public void alugarLivro(String idCliente, String idLivro) {
-        Cliente cliente = null;
-        Livro livro = null;
+        try {
+            Cliente cliente = buscarClientePorId(idCliente);
+            Livro livro = buscarLivroPorId(idLivro);
 
-        for (Cliente c : clientes) {
-            if (c.getId().equals(idCliente)) {
-                cliente = c;
-                break;
-            }
-        }
+            if (cliente != null && livro != null) {
+                if (livro.isDisponibilidade()) {
+                    if (cliente.getIdade() >= livro.getClassificacaoIndicativa()) {
+                        Aluguel novoAluguel = Aluguel.builder()
+                                .livro(livro)
+                                .cliente(cliente)
+                                .dataDoAluguel(LocalDate.now())
+                                .statusDoAluguel(true)
+                                .build();
 
-        for (Livro l : livros) {
-            if (l.getId().equals(idLivro)) {
-                livro = l;
-                break;
-            }
-        }
+                        this.alugueis.add(novoAluguel);
 
-        if (cliente != null && livro != null) {
-            if (livro.isDisponibilidade()) {
-                if (cliente.getIdade() >= livro.getClassificacaoIndicativa()) {
-                    Aluguel novoAluguel = Aluguel.builder()
-                            .livro(livro)
-                            .cliente(cliente)
-                            .dataDoAluguel(LocalDate.now())
-                            .statusDoAluguel(true)
-                            .build();
-
-                    this.alugueis.add(novoAluguel);
-
-                    livro.setDisponibilidade(false);
-                    System.out.println("Livro alugado com sucesso!");
+                        livro.setDisponibilidade(false);
+                        System.out.println("Livro alugado com sucesso!");
+                    } else {
+                        throw new IdadeInsuficienteException("O cliente não tem idade suficiente para alugar este livro.");
+                    }
                 } else {
-                    System.out.println("O cliente não tem idade suficiente para alugar este livro.");
+                    throw new LivroNaoDisponivelException("Livro não disponível para aluguel.");
                 }
             } else {
-                System.out.println("Livro não disponível para aluguel.");
+                throw new ElementoNaoEncontradoException("Livro ou cliente não encontrado na biblioteca!");
             }
-        } else {
-            System.out.println("Livro ou cliente não encontrado na biblioteca!");
+        } catch (IdadeInsuficienteException | LivroNaoDisponivelException | ElementoNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Ocorreu um erro inesperado: " + e.getMessage());
         }
+    }
+
+    private Cliente buscarClientePorId(String idCliente) {
+        for (Cliente c : clientes) {
+            if (c.getId().equals(idCliente)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    private Livro buscarLivroPorId(String idLivro) {
+        for (Livro l : livros) {
+            if (l.getId().equals(idLivro)) {
+                return l;
+            }
+        }
+        return null;
     }
 
     public void listarAlugueis() {
