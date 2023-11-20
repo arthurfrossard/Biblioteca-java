@@ -39,9 +39,18 @@ public class UI {
             String dataNascimentoString = sc.nextLine();
             LocalDate dataDeNascimento = LocalDate.parse(dataNascimentoString, formatter);
 
+            LocalDate dataAtual = LocalDate.now();
+
+            if (dataDeNascimento.isAfter(dataAtual)) {
+                throw new IllegalArgumentException("Data de nascimento não pode ser uma data futura.");
+            }
+
             biblioteca.cadastrarCliente(nome, cpf, dataDeNascimento);
+            System.out.println("Cliente cadastrado com sucesso!");
         } catch (DateTimeParseException e) {
             System.out.println("Formato de data inválido. Use o formato DD/MM/YYYY.");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -70,9 +79,17 @@ public class UI {
             int anoPublicacao = sc.nextInt();
             sc.nextLine();
 
+            if (anoPublicacao > LocalDate.now().getYear()) {
+                throw new IllegalArgumentException("Ano de publicação não pode ser um ano futuro.");
+            }
+
             System.out.print("Classificação indicativa do livro: ");
             int classificacaoIndicativa = sc.nextInt();
             sc.nextLine();
+
+            if (classificacaoIndicativa < 0 || classificacaoIndicativa > 18) {
+                throw new IllegalArgumentException("Classificação indicativa deve estar entre 0 e 18.");
+            }
 
             System.out.print("Valor do aluguel por dia: ");
             double valorDoAluguelPorDia = sc.nextDouble();
@@ -81,6 +98,8 @@ public class UI {
             biblioteca.cadastrarLivro(titulo, autor, isbn, genero, anoPublicacao, classificacaoIndicativa, valorDoAluguelPorDia);
         } catch (InputMismatchException e) {
             System.out.println("Entrada inválida. Certifique-se de inserir valores numéricos corretos.");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
     }
 
